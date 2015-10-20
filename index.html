@@ -20,6 +20,12 @@
         <!-- Code syntax highlighting -->
         <link rel="stylesheet" href="lib/css/zenburn.css">
 
+        <style>
+        .reveal small {
+            display: inline;
+        }
+        </style>
+
         <!-- Printing and PDF exports -->
         <script>
             var link = document.createElement( 'link' );
@@ -48,34 +54,179 @@
                 </section>
 
                 <section>
-                    <h2>Hello There</h2>
-                    <p>
-                        reveal.js enables you to create beautiful interactive slide decks using HTML. This presentation will show you examples of what it can do.
-                    </p>
+                    <section>
+                        <p><img src="./demo/timing.png" alt=""></p>
+                    </section>
+
+                    <section>
+                        <dl>
+                            <dt>Stalled / Blocking</dt>
+                            <dd>
+                                请求发起之前等待的时间总和。包含了用于处理代理的时间。另外，如果有已经建立好的连接，那么这个时间还包括等待已建立连接被复用的时间，这个遵循 Chrome 对同一源最大6个TCP连接的规则。
+                                <small><a href="http://fex.baidu.com/blog/2015/01/chrome-stalled-problem-resolving-process/" target="_blank">Chrome的bug导致stalled了21秒</a></small>
+                            </dd>
+                            <dt>Proxy Negotiation</dt>
+                            <dd>处理代理的时间</dd>
+                            <dt>DNS Lookup</dt>
+                            <dd>查找DNS的时间。页面上每个新的域都需要一次完整的寻路来完成DNS查找。</dd>
+                            <dt>Initial Connection / Connecting</dt>
+                            <dd>建立链接的时间，包括TCP三次握手及重试握手，还有处理SSL。</dd>
+                            <dt>SSL</dt>
+                            <dd>处理 SSL 握手</dd>
+                            <dt>Request Sent / Sending</dt>
+                            <dd>请求发送的时间</dd>
+                            <dt>Waiting (<abbr title="Time To First Byte">TTFB</abbr>)</dt>
+                            <dd>Time To First Byte，等待首个字节返回的时间</dd>
+                            <dt>Content Download / Downloading</dt>
+                            <dd>全部内容下载完成的时间</dd>
+                        </dl>
+                    </section>
+
+                    <section>
+                        <h3><a href="http://javascript.ruanyifeng.com/bom/performance.html" target="_blank">Performance API</a></h3>
+                    </section>
+
+                    <section>
+                        <h3>多普勒测速</h3>
+                        <a href="http://velocity.oreilly.com.cn/2011/ppts/MobilePerformanceVelocity2011_DavidWei.pdf" target="_blank"><img src="./demo/doppler.png" alt=""></a>
+                        <!-- Round trip time (RTT)  -->
+                    </section>
+
+                    <section>
+                        <h3><a href="https://developer.yahoo.com/performance/rules.html" target="_blank">Yahoo的军规</a></h3>
+                    </section>
                 </section>
 
-                <!-- Example of nested vertical slides -->
                 <section>
                     <section>
-                        <h2>Vertical Slides</h2>
-                        <p>Slides can be nested inside of each other.</p>
-                        <p>Use the <em>Space</em> key to navigate through all slides.</p>
-                        <br>
-                        <a href="#" class="navigate-down">
-                            <img width="178" height="238" data-src="https://s3.amazonaws.com/hakim-static/reveal-js/arrow.png" alt="Down arrow">
-                        </a>
+                        <h2>HTML语义化</h2>
                     </section>
                     <section>
-                        <h2>Basement Level 1</h2>
-                        <p>Nested slides are useful for adding additional detail underneath a high level horizontal slide.</p>
+                        <ul>
+                            <li>p - <small>段落</small></li>
+                            <li>h1,h2,h3,h4,h5,h6 - <small>层级标题</small></li>
+                            <li>strong,em - <small>强调</small></li>
+                            <li>ins - <small>插入</small></li>
+                            <li>del - <small>删除</small></li>
+                            <li>abbr - <small>缩写</small></li>
+                            <li>code - <small>代码标识</small></li>
+                            <li>cite - <small>引述来源作品的标题</small></li>
+                            <li>q - <small>引用</small></li>
+                            <li>blockquote - <small>一段或长篇引用</small></li>
+                            <li>ul - <small>无序列表</small></li>
+                            <li>ol - <small>有序列表</small></li>
+                            <li>dl,dt,dd - <small>定义列表</small></li>
+                            <li>table - <small>表格，列表</small></li>
+                        </ul>
                     </section>
                     <section>
-                        <h2>Basement Level 2</h2>
-                        <p>That's it, time to go back up.</p>
-                        <br>
-                        <a href="#/2">
-                            <img width="178" height="238" data-src="https://s3.amazonaws.com/hakim-static/reveal-js/arrow.png" alt="Up arrow" style="transform: rotate(180deg); -webkit-transform: rotate(180deg);">
-                        </a>
+                        <ul>
+                            <li>article - <small>独立的文档、页面、应用、站点</small></li>
+                            <li>section - <small>按主题将内容分组，层级标题，并非「语义化的 div」。当你希望这个元素的内容体现在文档的提纲 (outline) 中时，用 section 是合适的。</small></li>
+                            <li>nav - <small>导航</small></li>
+                            <li>aside - <small>与周围内容关系不太密切的内容 (eg. 广告 / 侧边栏内容）</small></li>
+                            <li>header - <small>一组介绍性描述或导航信息（eg. 目录 / 搜索框 / logo）</small></li>
+                            <li>footer - <small>底部元素，代表最近的父级区块内容的页脚</small></li>
+                            <li>address - <small>联系人信息</small></li>
+                            <!-- 基本拷贝于 http://justineo.github.io/slideshows/semantic-html/#/6/1 ，感谢E0大大的整理 -->
+                        </ul>
+                        <p><a href="http://justineo.github.io/slideshows/semantic-html/#/6/1">更多详细信息</a></p>
+                    </section>
+                </section>
+
+                <section>
+                    <section>
+                        <h2>CSS、JAVASCRIPT的引入</h2>
+                    </section>
+                    <section>
+                        <pre><code>&lt;link rel="stylesheet" href="page.css"&gt;
+&lt;script src="page.js"&gt;&lt;/script&gt;</code></pre>
+                    </section>
+                    <section>
+                        <h3>protocol-relative URL</h3>
+                        <pre><code>&lt;script src="//qq.com/page.js"&gt;&lt;/script&gt;</code></pre>
+                        <p>使用 protocol-relative URL 引入 CSS，在 IE7/8 下，会发两次请求。</p>
+                    </section>
+                </section>
+
+                <section>
+                    <section>
+                        <h2>JAVASCRIPT 单线程</h2>
+                    </section>
+                    <section>
+                        <img src="./demo/javascript-single.jpg" alt="">
+                    </section>
+                    <section>
+                        <pre><code>setTimeout(function () {
+    console.log(1);
+}, 0);
+console.log(2);</code></pre>
+                    </section>
+                </section>
+
+                <section>
+                    <section>
+                        <p><code>getElementsByTagName()</code><br/> VS <br/><code>querySelectorAll()</code></p>
+                    </section>
+
+                    <section>
+                        <pre><code>document.getElementsByTagName('div');
+document.querySelectorAll('div');</code></pre>
+                    </section>
+
+                    <section>
+                        <ul>
+                            <li>Live NodeList</li>
+                            <li>Static NodeList</li>
+                        </ul>
+                    </section>
+
+                    <section>
+                        <pre><code>var divs = document.getElementsByTagName("div");
+var i = 0;
+
+while(i &lt; divs.length){
+    document.body.appendChild(document.createElement("div"));
+    i++;
+}</code></pre>
+                        <p class="fragment">这是一个死循环！</p>
+                    </section>
+
+                    <section>
+                        <a href="https://www.nczonline.net/blog/2010/09/28/why-is-getelementsbytagname-faster-that-queryselectorall/" target="_blank">为什么 <code>getElementsByTagName()</code> 比 <code>querySelectorAll()</code> 快？</a>
+                    </section>
+                </section>
+
+                <section>
+                    <section>
+                        <h2>如何记录页面的 <code>a</code> 标签的点击事件？</h2>
+                        <pre class="fragment"><code>$('a').click(function () {
+    // 记录操作
+});</code></pre>
+                        <pre class="fragment"><code>var links = document.getElementsByTagName('a');
+for (var i = 0, l = links.length; i < l; i++) {
+    links[i].onclick = (function (link) {
+        // 记录操作
+    })(links[i])
+}</code></pre>
+                        <p class="fragment">链接多了之后很慢！</p>
+                    </section>
+                    <section>
+                        <h3>事件代理</h3>
+                    </section>
+                    <section>
+                        <h3>捕获与冒泡</h3>
+                        <img src="./demo/delegate.png" alt="">
+                    </section>
+                    <section>
+                        <pre><code>document.body.addEventListener('click', function (e) {
+    e.preventDefault();
+    var target = e.target;
+    var isLink = target.nodeName === 'A';
+    if (isLink) {
+        console.log('a');
+    }
+}, false);</code></pre>
                     </section>
                 </section>
 
@@ -188,7 +339,7 @@
                     </section>
                     <section data-background="https://s3.amazonaws.com/hakim-static/reveal-js/image-placeholder.png">
                         <h2>Image Backgrounds</h2>
-                        <pre><code>&lt;section data-background="image.png"&gt;</code></pre>
+                        <pre class="html"><code>&lt;section data-background="image.png"&gt;</code></pre>
                     </section>
                     <section data-background="https://s3.amazonaws.com/hakim-static/reveal-js/image-placeholder.png" data-background-repeat="repeat" data-background-size="100px">
                         <h2>Tiled Backgrounds</h2>
