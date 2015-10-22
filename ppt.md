@@ -220,10 +220,12 @@ while(i < divs.length){
     /* ... */
 }
 ```
-[Github CSS Performance](https://speakerdeck.com/jonrohan/githubs-css-performance)
+> CSS selector matching is now reasonably fast for the absolute majority of common selectors that used to be slow at the time of the profiler implementation. This time is also included into the Timeline "Recalculate Style" event.
+> As such, I believe the CSS selector profiler is not as useful as it [might have been] used to and can safely be dropped. This will also reduce the fraction of developers trying to micro-optimize already fast selectors.
 
-只有在极端例子下面才会引发严重的性能问题
-<!-- .element: class="fragment" data-fragment-index="1" -->
+Chrome 的 CSS 选择器匹配性能已经足够快了，Chrome 30中[移除了自己的 CSS selector性能分析器](https://code.google.com/p/chromium/issues/detail?id=265486)
+```
+[Github 遇到的 CSS 性能挑战](https://speakerdeck.com/jonrohan/githubs-css-performance)
 --
 ### 避免冲突
 ```
@@ -458,7 +460,7 @@ var result = `<h1>${data.title}</h1>
 ---
 
 
-## DOM 操作费时
+## DOM 操作
 --
 - `relayout / reflow` - 重新计算节点的位置
 - `repaint` - 重新绘制节点到屏幕上
@@ -598,6 +600,80 @@ CSS 会忽略不支持的属性或选择器
 }
 ```
 
+
+---
+
+
+## 布局
+--
+```
+.block {
+    /* 块级元素，新开始一行并且尽可能撑满容器 */
+    display: block;
+}
+.inline {
+    /* 行内元素，一行之内横向的排列，宽高不起作用 */
+    display: inline;
+    width: 1000px; /* 无效 */
+}
+.hide {
+    /* 隐藏元素，没有高宽 */
+    display: none;
+}
+.inline-block {
+    /* 行内元素，一行之内横向的排列，宽高起作用 */
+    display: inline-block;
+    height: 24px; /* 有效 */
+}
+```
+--
+### 盒模型
+```
+.box {
+    margin: 10px;
+    padding: 10px;
+    width: 100px;
+    height: 100px;
+    border: 1px solid #CCC;
+}
+```
+
+`[box-sizing](http://zh.learnlayout.com/box-sizing.html)`
+<!-- .element: class="fragment" data-fragment-index="1" -->
+--
+![](./demo/catboxmodel.jpg)
+<!-- 盒模型就像集装箱里面的盒子一样，盒子间的距离是 margin，盒子外壳的厚度是
+border，盒子内的货物的高宽是 width 与 height，货物与盒子的间距是 padding -->
+--
+![](./demo/boxmodel.png)
+
+仅仅是普通文档流，一般是从左至右、从上到下
+<!-- .element: class="fragment" data-fragment-index="1" -->
+
+
+---
+
+
+## 浮动元素
+--
+1. 浮动元素脱离文档流。对于它的父元素来说，浮动元素是不存在的（父元素不会自适应以包裹浮动元素，所以需要清除浮动）
+2. 一个浮动元素的位置会尽可能的靠近他父元素的左上角或者右上角
+3. 浮动元素前面定义的元素会把浮动元素挤到下面
+4. 先声明的浮动元素有优先靠近父元素左上角或者右上角（规则2）位置的权利
+5. 规则2的拓展，如果有多个相同方向的浮动元素，浮动元素也会尽可能的靠近左上角或者右上角，直到父元素宽度没法放下这个元素的时候，这个元素才会被挤下去
+6. 行内元素添加浮动属性会变成块级元素
+7. 浮动元素不会跑出父元素的边界
+--
+### 清除浮动
+
+
+---
+
+
+[学习CSS布局](http://zh.learnlayout.com/)
+
+
+---
 
 
 
