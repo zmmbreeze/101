@@ -582,11 +582,9 @@ function call2() {
 ### [CSS Hack Table](http://swordair.com/tools/css-hack-table/)
 --
 CSS 会忽略不支持的属性或选择器
-<!--
-    http://stackoverflow.com/questions/13816764/invalid-css-selector-causes-rule-to-be-dropped-what-is-the-rationale
-    http://stackoverflow.com/questions/5426261/border-radius-causing-naughty-errors-in-firebug-unknown-property-declaratio
-    Fault tolerance: https://en.wikipedia.org/wiki/Fault_tolerance#Terminology
--->
+<!-- http://stackoverflow.com/questions/13816764/invalid-css-selector-causes-rule-to-be-dropped-what-is-the-rationale -->
+<!-- http://stackoverflow.com/questions/5426261/border-radius-causing-naughty-errors-in-firebug-unknown-property-declaratio -->
+<!-- Fault tolerance: https://en.wikipedia.org/wiki/Fault_tolerance#Terminology -->
 --
 ```
 .test1 {
@@ -594,8 +592,9 @@ CSS 会忽略不支持的属性或选择器
     background-color: rgba(255, 255, 255, .8); /* 支持rgba */
 }
 .test2 {
-    background-image: url(xxx.png);
-    background-image: url(data:image/svg+xml;base64,PH…….==), none; /* IE9+ 不支持多背景 */
+    background-image: url(top.png);
+    /* IE9+ 不支持多背景 */
+    background-image: url(data:image/svg+xml;base64,....), none;
 }
 ```
 
