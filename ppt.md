@@ -71,7 +71,7 @@ Javascript 可以操作 CSSOM，所以需要等到 css 完全加载解析完毕�
 并行下载，不会 block DOM 不能确保执行顺序
 <!-- .element: class="fragment" data-fragment-index="1" -->
 --
-No Rules! Use Tools!
+No Rules! Just Tools!
 
 
 
@@ -196,7 +196,44 @@ while(i < divs.length){
 --
 <p data-height="268" data-theme-id="20219" data-slug-hash="GpyXxV" data-default-tab="result" data-user="zmmbreeze" class='codepen'>See the Pen <a href='http://codepen.io/zmmbreeze/pen/GpyXxV/'>The Difference Between Throttling, Debouncing, and Neither</a> by mzhou (<a href='http://codepen.io/zmmbreeze'>@zmmbreeze</a>) on <a href='http://codepen.io'>CodePen</a>.</p>
 <script async src="//assets.codepen.io/assets/embed/ei.js"></script>
+
+
+---
+
+
+## Selector
 --
+```
+.portal .lbf-combobox #user-id.lbf-combobox-label { /* ... */ }
+```
+解析顺序：Right to Left
+<!-- .element: class="fragment" data-fragment-index="1" -->
+<!-- 包括jQuery(Sizzle)也是RTL -->
+--
+```
+#user-id { /* ... */ }
+```
+
+<!-- .element: class="fragment" data-fragment-index="1" -->
+--
+### 避免冲突
+```
+/* index_header.css */
+.header .current { background: #FEFEFE; }
+
+/* index_list.css */
+.current  { background: blue; }
+```
+--
+### [OOCSS](http://oocss.org/) / [SMACSS](https://smacss.com/) / [BEM](https://en.bem.info/)
+--
+```
+.menu {}
+.menu__item {}
+.menu__item_current {}
+```
+
+
 
 
 ---
@@ -248,7 +285,6 @@ $('body').on('click', 'a', function () {
 
 - 能处理动态更新的DOM元素
 - DOM元素很多时，有性能优势
---
 
 
 ---
@@ -403,7 +439,7 @@ requestAnimationFrame(function() {
 --
 话说回来，一般调用没那么频繁。只是特殊情况下（动画）需要注意优化
 --
-### No Rules! Use Tools!
+### No Rules! Just Tools!
 
 
 ---
