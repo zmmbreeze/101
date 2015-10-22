@@ -24,6 +24,55 @@
     <!-- Round trip time (RTT)  -->
 --
 ### [Yahoo的军规](https://developer.yahoo.com/performance/rules.html)
+--
+<pre><code>&lt;!-- BAD: 会block外部script请求 --&gt;
+&lt;script src="//example.com/test.js"&gt;&lt;/script&gt;
+
+&lt;!-- GOOD: 外部script会异步加载 --&gt;
+&lt;script&gt;
+    var script = document.createElement('script');
+    script.src = "//example.com/test.js";
+    document.getElementsByTagName('head')[0].appendChild(script);
+&lt;/script&gt;</code></pre>
+<!-- https://www.igvita.com/2014/05/20/script-injected-async-scripts-considered-harmful/ -->
+--
+<pre><code>&lt;link href="http://example.com/test.css?rtt=2" rel="stylesheet"&gt;
+&lt;!-- body 内容 --&gt;
+&lt;script&gt;
+var script = document.createElement('script');
+script.src = "http://example.com/test.js?rtt=1&a";
+document.getElementsByTagName('head')[0].appendChild(script);
+&lt;/script&gt;
+
+&lt;script&gt;
+var script = document.createElement('script');
+script.src = "http://example.com/test.js?rtt=1&b";
+document.getElementsByTagName('head')[0].appendChild(script);
+&lt;/script&gt;</code></pre>
+--
+[![](./demo/script-1.jpeg)](http://output.jsbin.com/qefefiyi/9/quiet)
+
+Javascript 可以操作 CSSOM，所以需要等到 css 完全加载解析完毕之后才能执行 script 标签
+<!-- .element: class="fragment" data-fragment-index="1" -->
+--
+<pre><code>&lt;link href="http://example.com/test.css?rtt=2" rel="stylesheet"&gt;
+&lt;!-- body 内容 --&gt;
+&lt;script src="http://example.com/test.js?rtt=1&a"&gt;&lt;/script&gt;
+&lt;script src="http://example.com/test.js?rtt=1&b" &gt;&lt;/script&gt;</code></pre>
+--
+[![](./demo/script-2.jpeg)](http://output.jsbin.com/qefefiyi/8/quiet)
+
+浏览器（包括 IE8/9 和 Android 2.3/2.2）会预解析查找可以下载的外部文件，并行下载，串行执行
+<!-- .element: class="fragment" data-fragment-index="1" -->
+--
+<pre><code>&lt;!-- 现代浏览器使用 'async'，旧IE使用 'defer' --&gt;
+&lt;script src="//somehost.com/awesome-widget.js" async defer&gt;&lt;/script&gt;</code></pre>
+
+并行下载，不会 block DOM 不能确保执行顺序
+<!-- .element: class="fragment" data-fragment-index="1" -->
+--
+No Rules! Use Tools!
+
 
 
 ---
@@ -252,7 +301,8 @@ var result = template(tpl, {
 
 - 直观可读性好
 - 模板字符串可复用
-- JS压缩引擎可以合并字符串，没有 `+` 操作符
+- 模板默认提供转义，更安全
+- JS压缩引擎可以合并字符串，压缩后没有 `+` 操作符
 --
 ### ES2015 / ES6 的模板字符串
 ```
@@ -352,6 +402,8 @@ requestAnimationFrame(function() {
 [Fast dom](https://github.com/wilsonpage/fastdom)
 --
 话说回来，一般调用没那么频繁。只是特殊情况下（动画）需要注意优化
+--
+### No Rules! Use Tools!
 
 
 ---
