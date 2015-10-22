@@ -137,9 +137,12 @@ console.log(2);
 
 
 ## [11年 Twitter 改版](http://ejohn.org/blog/learning-from-twitter/)
-引入了无线滚动（infinite scroll）后页面滚动时速度变的很慢！<!-- .element: class="fragment" data-fragment-index="1" -->
 --
-jQuery 1.4.2 升级到 1.4.4
+引入了无限滚动特性
+
+页面滚动时速度变的很慢！
+
+jQuery 1.4.2 升级到 1.4.4<!-- .element: class="fragment" data-fragment-index="1" -->
 --
 ### 定位bug
 
@@ -204,16 +207,22 @@ while(i < divs.length){
 ## Selector
 --
 ```
-.portal .lbf-combobox #user-id.lbf-combobox-label { /* ... */ }
+.portal .lbf-combobox #user-id.lbf-combobox-label {
+    /* ... */
+}
 ```
-解析顺序：Right to Left
+解析顺序：[从右到左](http://stackoverflow.com/questions/5797014/why-do-browsers-match-css-selectors-from-right-to-left/5813672#5813672)
 <!-- .element: class="fragment" data-fragment-index="1" -->
 <!-- 包括jQuery(Sizzle)也是RTL -->
 --
 ```
-#user-id { /* ... */ }
+#user-id {
+    /* ... */
+}
 ```
+[Github CSS Performance](https://speakerdeck.com/jonrohan/githubs-css-performance)
 
+只有在极端例子下面才会引发严重的性能问题
 <!-- .element: class="fragment" data-fragment-index="1" -->
 --
 ### 避免冲突
@@ -227,12 +236,95 @@ while(i < divs.length){
 --
 ### [OOCSS](http://oocss.org/) / [SMACSS](https://smacss.com/) / [BEM](https://en.bem.info/)
 --
+### BEM
+![](./demo/bem.png)
+--
 ```
-.menu {}
-.menu__item {}
-.menu__item_current {}
-```
+/* Block */
+.menu {
+    display: block;
+}
 
+/* Element */
+.menu__item {
+    float: left;
+}
+
+/* Modifier */
+.menu__item_current {
+    background-color: #EFEFEF;
+}
+```
+--
+#### 优点
+- 减少后代选择器
+- 易重用，可扩展
+--
+#### 但是很丑
+--
+### [AMCSS](https://amcss.github.io/)
+![](./demo/amcss.png)
+--
+### 缺点
+- 各种 JS 库支持不够好
+- 开发者的习惯很难改
+
+<!-- 作者弃坑了，转而做 CSS Modules -->
+--
+### [CSS Modules](http://glenmaddern.com/articles/css-modules)
+```
+/* components/submit-button.css */
+.common { /* font-sizes, padding, border-radius */ }
+.normal { composes: common; /* blue color, light blue background */ }
+.error { composes: common; /* red color, light red background */ }
+```
+```
+.components_submit_button__common__abc5436 { /* font-sizes, padding, border-radius */ }
+.components_submit_button__normal__def6547 { /* blue color, light blue background */ }
+.components_submit_button__error__1638bcd { /* red color, light red background */ }
+```
+<!-- .element: class="fragment" data-fragment-index="1" -->
+--
+<!-- 个人习惯 -->
+```
+/* util.less */
+.clearfix() { /* 清除浮动代码 */ }
+```
+```
+/* common.less */
+/* `g-` 作为全局模块的前缀 */
+.g-header {
+    .clearfix();
+}
+```
+```
+/* page/index.less */
+/* `page-` 作为页面class的前缀 */
+.page-index {
+    /* 页面模块Block名 */
+    .header {
+        .clearfix();
+
+        /* 页面模块中的Element */
+        &-menu {
+            /* ... */
+        }
+        /* 尽可能使用标签，确保 HTML 语义化 */
+        &-menu li {
+            float: left;
+        }
+        /* Element的状态名 */
+        /* 非Block命名尽量简写，`cur === current` */
+        &-menu .header-menu-cur {
+            float: left;
+        }
+    }
+}
+```
+--
+Javascript 用 ID 选择器，CSS 用 Class 选择器
+
+尽量做到“行为和样式分离”
 
 
 
@@ -368,18 +460,17 @@ var result = `<h1>${data.title}</h1>
 
 ## DOM 操作费时
 --
-### `repaint` 与 `relayout / reflow`
+- `relayout / reflow` - 重新计算节点的位置
+- `repaint` - 重新绘制节点到屏幕上
+<!-- relayout 之后一定触发 repaint -->
+--
 ![](./demo/webkitflow.png)
 ![](./demo/geckoflow.jpg)
 <!-- http://www.phpied.com/rendering-repaint-reflowrelayout-restyle/ -->
 <!-- http://www.html5rocks.com/en/tutorials/internals/howbrowserswork/ -->
 --
-- `relayout / reflow` - 重新计算节点的位置
-- `repaint` - 重新绘制节点到屏幕上
-<!-- relayout 之后一定触发 repaint -->
---
 ### layout thrashing
-![](layoutthrashing.png)
+![](./demo/layoutthrashing.png)
 --
 ```
 // 读
@@ -404,7 +495,7 @@ var height2 = element2.clientHeight;
 element2.style.height = (height2 + 2) + 'px';
 ```
 
-此时第二次读操作执行前，会强迫浏览器 relayout 一次，这样才能计算得到新的 `height`
+此时第二次读操作执行前，会强迫浏览器 relayout 一次，这样才能计算得到新的 height
 <!-- .element: class="fragment" data-fragment-index="1" -->
 --
 ```
@@ -418,21 +509,45 @@ element1.style.height = (height1 + 2) + 'px';
 element2.style.height = (height2 + 2) + 'px';
 ```
 
-读写分离，减少 layout thrashing。但是显示很骨感，不一定DOM操作都在一个方法体里面
+读写分离，减少 layout thrashing
 --
 ```
-// 读
-var height1 = element1.clientHeight;
-// 写
-requestAnimationFrame(function() {
+function call1() {
+    // 读
+    var height1 = element1.clientHeight;
+    // 写
     element1.style.height = (height1 + 2) + 'px';
-});
-// 读
-var height2 = element2.clientHeight;
-// 写
-requestAnimationFrame(function() {
+}
+function call2() {
+    // 读
+    var height2 = element2.clientHeight;
+    // 写
     element2.style.height = (height2 + 2) + 'px';
-});
+}
+
+call1();
+call2();
+```
+
+不一定 DOM 操作都在一个方法体里面
+--
+```
+function call1() {
+    // 读
+    var height1 = element1.clientHeight;
+    // 写
+    requestAnimationFrame(function() {
+        element1.style.height = (height1 + 2) + 'px';
+    });
+}
+function call2() {
+    // 读
+    var height2 = element2.clientHeight;
+    // 写
+    requestAnimationFrame(function() {
+        element2.style.height = (height2 + 2) + 'px';
+    });
+}
 ```
 <!-- http://wilsonpage.co.uk/preventing-layout-thrashing/ -->
 [Fast dom](https://github.com/wilsonpage/fastdom)
@@ -440,6 +555,51 @@ requestAnimationFrame(function() {
 话说回来，一般调用没那么频繁。只是特殊情况下（动画）需要注意优化
 --
 ### No Rules! Just Tools!
+
+
+---
+
+
+## CSS 兼容性 Hack
+--
+### IE 条件注释
+```
+<!--[if IE 6]>
+	这段文字只在IE6浏览器显示
+<![endif]-->
+```
+--
+### 属性前缀 Hack
+
+| Selector | IE6(s) | IE7(s) | IE8(s) | IE9(s) | IE10(s) |
+| -------- | ------ | ------ | ------ | ------ | ------- |
+| `color:red`     | Y | Y | Y | Y | Y |
+| `color:red\0`   | N | N | Y | Y | Y |
+| `color:red\9\0` | N | N | N | Y | Y |
+| `*color:red`    | Y | Y | N | N | N |
+| `_color:red`    | Y | N | N | N | N |
+--
+### [CSS Hack Table](http://swordair.com/tools/css-hack-table/)
+--
+CSS 会忽略不支持的属性或选择器
+<!--
+    http://stackoverflow.com/questions/13816764/invalid-css-selector-causes-rule-to-be-dropped-what-is-the-rationale
+    http://stackoverflow.com/questions/5426261/border-radius-causing-naughty-errors-in-firebug-unknown-property-declaratio
+    Fault tolerance: https://en.wikipedia.org/wiki/Fault_tolerance#Terminology
+-->
+--
+```
+.test1 {
+    background-color: #FFF;                    /* 不支持rgba */
+    background-color: rgba(255, 255, 255, .8); /* 支持rgba */
+}
+.test2 {
+    background-image: url(xxx.png);
+    background-image: url(data:image/svg+xml;base64,PH…….==), none; /* IE9+ 不支持多背景 */
+}
+```
+
+
 
 
 ---

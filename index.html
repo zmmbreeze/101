@@ -24,6 +24,9 @@
         .reveal small {
             display: inline;
         }
+        .reveal section img {
+            background-color: #FFF;
+        }
         </style>
 
         <!-- Printing and PDF exports -->
@@ -51,65 +54,6 @@
                     data-separator-vertical="^--"
                     data-separator-notes="^Note:"></section>
 
-                <section>
-                </section>
-
-                <section>
-                    <section><h2>字符串拼接</h2></section>
-
-                    <section>
-                        <pre><code>var result = ''
-    + '&lt;h1&gt;' + title + '&lt;/h1&gt;'
-    + '&lt;p&gt;' + content + '&lt;/p&gt;';</code></pre>
-                        <pre><code>var result = [
-    '&lt;h1&gt;' + title + '&lt;/h1&gt;',
-    '&lt;p&gt;' + content + '&lt;/p&gt;'
-].join('');</code></pre>
-                    </section>
-
-                    <section>
-                        <p><code>Array.join</code> &gt; <code>+</code>操作符</p>
-                        <p class="fragment">只是在旧浏览器下（IE7-），现代浏览器中差不多。</p>
-                        <p class="fragment"><a href="http://jsperf.com/connect-string-array-with-join-and-loop" target="_blank">性能测试</a></p>
-                    </section>
-
-                    <section>
-                        <p><code>String.replace</code> 或者模板引擎更好</p>
-                        <pre><code>var tpl = ''
-    + '&lt;h1&gt;{title}&lt;/h1&gt;'
-    + '&lt;p&gt;{content}&lt;/p&gt;';
-var template = function (tpl, data) {
-    return tpl.replace(/{([^}]+)}/g, function (r, $0) {
-        return data[$0] || '';
-    });
-};
-var result = template(tpl, {
-    title: '标题',
-    content: '内容'
-});
-</code></pre>
-                    </section>
-
-                    <section>
-                        <h3>优势</h3>
-                        <ul>
-                            <li>直观可读性好</li>
-                            <li>模板字符串可复用</li>
-                            <li>JS压缩引擎可以合并字符串，没有 <code>+</code> 操作符</li>
-                        </ul>
-                    </section>
-
-                    <section>
-                        <h3>ES2015 / ES6 的模板字符串</h3>
-                        <pre><code>var data = {
-    title: '标题',
-    content: '内容'
-};
-
-var result = `&lt;h1&gt;${data.title}&lt;/h1&gt;
-    &lt;p&gt;${data.content}&lt;/p&gt;`;</code></pre>
-                    </section>
-                </section>
 
 
                 <section>
@@ -421,6 +365,3 @@ Reveal.addEventListener( 'customevent', function() {
 
     </body>
 </html>
-                            <li>引入了无线滚动模式</li>
-                        <p>jQuery 1.4.3开始 Sizzle 会优先使用querySelectorAll</p>
-                    </section>
