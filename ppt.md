@@ -1,5 +1,73 @@
-# 前端101
+# 前端 101
 [MZhou](https://github.com/zmmbreeze) / [@mmzhou](http://twitter.com/mmzhou)
+
+
+---
+
+
+```
+<!DOCTYPE html> <!-- HTML5 -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>标题</title>
+</head>
+<body>
+    内容
+</body>
+</html>
+```
+
+
+---
+
+
+## HTML语义化
+--
+- p - <small>段落</small>
+- h1,h2,h3,h4,h5,h6 - <small>层级标题</small>
+- strong,em - <small>强调</small>
+- ins - <small>插入</small>
+- del - <small>删除</small>
+- abbr - <small>缩写</small>
+- code - <small>代码标识</small>
+- cite - <small>引述来源作品的标题</small>
+- q - <small>引用</small>
+- blockquote - <small>一段或长篇引用</small>
+- ul - <small>无序列表</small>
+- ol - <small>有序列表</small>
+- dl,dt,dd - <small>定义列表</small>
+- table - <small>表格，列表</small>
+--
+- article - <small>独立的文档、页面、应用、站点</small>
+- section - <small>按主题将内容分组，层级标题，并非「语义化的 div」。当你希望这个元素的内容体现在文档的提纲 (outline) 中时，用 section 是合适的。</small>
+- nav - <small>导航</small>
+- aside - <small>与周围内容关系不太密切的内容 (eg. 广告 / 侧边栏内容）</small>
+- header - <small>一组介绍性描述或导航信息（eg. 目录 / 搜索框 / logo）</small>
+- footer - <small>底部元素，代表最近的父级区块内容的页脚</small>
+- address - <small>联系人信息</small>
+<!-- 基本拷贝于 http://justineo.github.io/slideshows/semantic-html/#/6/1 ，感谢E0大大的整理 -->
+
+[更多详细信息](http://justineo.github.io/slideshows/semantic-html/#/6/1)
+--
+- SEO
+- 有标准、不纠结
+- 高大上
+
+
+---
+
+
+## CSS、JAVASCRIPT的引入
+--
+<pre><code>&lt;link rel="stylesheet" href="page.css"/&gt;
+&lt;script src="page.js"&gt;&lt;/script&gt;</code></pre>
+--
+### protocol-relative URL
+
+<pre><code>&lt;link rel="stylesheet" href="//qq.com/page.css"&gt;</code></pre>
+
+使用 protocol-relative URL 引入 CSS，在 IE7/8 下，会发两次请求。<!-- .element: class="fragment" data-fragment-index="1" -->
 
 
 ---
@@ -60,7 +128,7 @@ Javascript 可以操作 CSSOM，所以需要等到 css 完全加载解析完毕�
 &lt;script src="http://example.com/test.js?rtt=1&a"&gt;&lt;/script&gt;
 &lt;script src="http://example.com/test.js?rtt=1&b" &gt;&lt;/script&gt;</code></pre>
 --
-[![](./demo/script-2.jpeg)](http://output.jsbin.com/qefefiyi/8/quiet)
+[![](./demo/script-2.png)](http://output.jsbin.com/qefefiyi/8/quiet)
 
 浏览器（包括 IE8/9 和 Android 2.3/2.2）会预解析查找可以下载的外部文件，并行下载，串行执行
 <!-- .element: class="fragment" data-fragment-index="1" -->
@@ -74,131 +142,262 @@ Javascript 可以操作 CSSOM，所以需要等到 css 完全加载解析完毕�
 No Rules! Just Tools!
 
 
-
 ---
 
 
-## HTML语义化
+## 布局
 --
-- p - <small>段落</small>
-- h1,h2,h3,h4,h5,h6 - <small>层级标题</small>
-- strong,em - <small>强调</small>
-- ins - <small>插入</small>
-- del - <small>删除</small>
-- abbr - <small>缩写</small>
-- code - <small>代码标识</small>
-- cite - <small>引述来源作品的标题</small>
-- q - <small>引用</small>
-- blockquote - <small>一段或长篇引用</small>
-- ul - <small>无序列表</small>
-- ol - <small>有序列表</small>
-- dl,dt,dd - <small>定义列表</small>
-- table - <small>表格，列表</small>
+### 本质上是一个个**长方形框**的布局
 --
-- article - <small>独立的文档、页面、应用、站点</small>
-- section - <small>按主题将内容分组，层级标题，并非「语义化的 div」。当你希望这个元素的内容体现在文档的提纲 (outline) 中时，用 section 是合适的。</small>
-- nav - <small>导航</small>
-- aside - <small>与周围内容关系不太密切的内容 (eg. 广告 / 侧边栏内容）</small>
-- header - <small>一组介绍性描述或导航信息（eg. 目录 / 搜索框 / logo）</small>
-- footer - <small>底部元素，代表最近的父级区块内容的页脚</small>
-- address - <small>联系人信息</small>
-<!-- 基本拷贝于 http://justineo.github.io/slideshows/semantic-html/#/6/1 ，感谢E0大大的整理 -->
-
-[更多详细信息](http://justineo.github.io/slideshows/semantic-html/#/6/1)
---
-## CSS、JAVASCRIPT的引入
---
-<pre><code>&lt;link rel="stylesheet" href="page.css"/&gt;
-&lt;script src="page.js"&gt;&lt;/script&gt;</code></pre>
---
-### protocol-relative URL
-
-<pre><code>&lt;link rel="stylesheet" href="//qq.com/page.css"&gt;</code></pre>
-
-使用 protocol-relative URL 引入 CSS，在 IE7/8 下，会发两次请求。<!-- .element: class="fragment" data-fragment-index="1" -->
-
-
----
-
-
-## JAVASCRIPT 单线程
---
-![](./demo/javascript-single.jpg)
---
+### 盒模型
 ```
-setTimeout(function () {
-    console.log(1);
-}, 0);
-console.log(2);
-```
-
-
----
-
-
-## [11年 Twitter 改版](http://ejohn.org/blog/learning-from-twitter/)
---
-引入了无限滚动特性
-
-页面滚动时速度变的很慢！
-
-jQuery 1.4.2 升级到 1.4.4<!-- .element: class="fragment" data-fragment-index="1" -->
---
-### 定位bug
-
-```
-$(window).bind('scroll', function () {
-    if (nearBottomOfPage()) {
-        // load more tweets ...
-    }
-});
-```
-
-```
-$details.find('.details-pane-outer');
-```
-<!-- .element: class="fragment" data-fragment-index="1" -->
---
-jQuery 1.4.3开始选择器引擎 Sizzle 会优先使用 `querySelectorAll`
---
-```
-// 1.4.2
-document.getElementsByClassName('details-pane-outer');
-// 1.4.4
-document.querySelectorAll('details-pane-outer');</code></pre>
-```
---
-```
-var divs = document.getElementsByTagName("div");
-var i = 0;
-
-while(i < divs.length){
-    document.body.appendChild(document.createElement("div"));
-    i++;
+.box {
+    margin: 10px;
+    padding: 10px;
+    width: 100px;
+    height: 100px;
+    border: 1px solid #CCC;
 }
 ```
 
-这是一个死循环！<!-- .element: class="fragment" data-fragment-index="1" -->
+[box-sizing](http://zh.learnlayout.com/box-sizing.html)
+<!-- .element: class="fragment" data-fragment-index="1" -->
 --
-- Live NodeList 快
-- Static NodeList 慢
+![](./demo/catboxmodel.jpg)
+<!-- 盒模型就像集装箱里面的盒子一样，盒子间的距离是 margin，盒子外壳的厚度是
+border，盒子内的货物的高宽是 width 与 height，货物与盒子的间距是 padding -->
 --
-[为什么 `getElementsByTagName()` 比 `querySelectorAll()` 快？](https://www.nczonline.net/blog/2010/09/28/why-is-getelementsbytagname-faster-that-queryselectorall/)
+![](./demo/boxmodel.png)
 --
-- DOM 查询结果需要重用时一定要缓存
-- 绑定重复触发的事件时（例如window scroll 事件）一定要做 throttle 或 debounce
+<div class="demo">
+    <div class="demo-block">这是一个块级元素 <code>display: block;</code></div>
+</div>
+
+块级元素，新开始一行并且尽可能撑满容器
+--
+<div class="demo">
+    Lorem Ipsum is simply dummy text of the printing and typesetting industry. <span class="demo-inline">这是一个行内元素 <code>display: inline;</code></span> 。Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+</div>
+
+行内元素，一行之内横向的排列，宽高不起作用
+--
+<div class="demo">
+    Lorem Ipsum is simply dummy text of the printing and typesetting industry. 这是一个行内块级元素 <span class="demo-inline-block"><code>display: inline-block;</code></span> 。Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+</div>
+
+行内块级元素，一行之内横向的排列，宽高起作用
+--
+```
+<div class="demo">
+    <p>
+        Lorem Ipsum is simply <span>这是一个行内块级元素 display: inline;</span> Lorem.
+    </p>
+    <p>
+        Lorem Ipsum is simply <span>这是一个行内块级元素 display: inline;</span> Lorem.
+    </p>
+</div>
+```
+--
+<div class="demo" style="padding:0; height:460px;">
+    <div class="demo-block" style="width:600px; margin:10px auto; padding:10px; height:auto;">
+        <div class="demo-line"><span class="demo-inline">Lorem Ipsum is simply</span> <span class="demo-inline">这是一个行内块</span></div>
+        <div class="demo-line"><span class="demo-inline">级元素 <code>display: inline;</code></span> <span class="demo-inline">Lorem.</span></div>
+    </div>
+    <div class="demo-block" style="width:600px; margin:10px auto; padding:10px; height:auto;">
+        <div class="demo-line"><span class="demo-inline">Lorem Ipsum is simply</span> <span class="demo-inline">这是一个行内块</span></div>
+        <div class="demo-line"><span class="demo-inline">级元素 <code>display: inline;</code></span> <span class="demo-inline">Lorem.</span></div>
+    </div>
+</div>
+--
+- 红色 - 块级框
+- 绿色 - 行框
+- 橙色 - 行内框
+
+普通文档流，一般是从左至右、从上到下
+<!-- .element: class="fragment" data-fragment-index="1" -->
 
 
 ---
 
 
-## throttle 和 debounce
+## 浮动元素
 --
-- [debounce](http://underscorejs.org/#debounce) - 阻止事件触发直到N段时间后
-- [throttle](http://underscorejs.org/#throttle) - 限制事件触发频率
+```
+.demo-box {
+    margin: 20px;
+    padding: 10px;
+    border: 5px dashed #000;
+}
+.demo-float-r,
+.demo-float {
+    margin: 10px;
+    float: left;    /* 左浮动 */
+    width: 100px;
+    height: 100px;
+    background: red;
+}
+.demo-float-r {
+    float: right;   /* 右浮动 */
+}
+```
 --
-<p data-height="268" data-theme-id="20219" data-slug-hash="GpyXxV" data-default-tab="result" data-user="zmmbreeze" class='codepen'>See the Pen <a href='http://codepen.io/zmmbreeze/pen/GpyXxV/'>The Difference Between Throttling, Debouncing, and Neither</a> by mzhou (<a href='http://codepen.io/zmmbreeze'>@zmmbreeze</a>) on <a href='http://codepen.io'>CodePen</a>.</p>
-<script async src="//assets.codepen.io/assets/embed/ei.js"></script>
+<div class="demo">
+    <div class="demo-box">
+        <div class="demo-float">left</div>
+        <span class="demo-float-r">right</span>
+    </div>
+</div>
+--
+1. 浮动元素脱离文档流
+2. 对于它的父元素来说，浮动元素是不存在的（父元素不会自适应以包裹浮动元素，所以需要清除浮动）
+3. 一个浮动元素的位置会尽可能的靠近他父元素的左上角或者右上角
+4. 行内元素添加浮动属性会变成块级元素
+5. 浮动元素不会浮动出父元素的边界
+--
+<div class="demo">
+    <div class="demo-box" style="height:200px;">
+        <p>Lorem Ipsum is simply dummy text of the printing . </p>
+        <div class="demo-float">1</div>
+        <div class="demo-float">2</div>
+        <div class="demo-float">3</div>
+        <div class="demo-float">4</div>
+        <div class="demo-float">5</div>
+        <div class="demo-float">6</div>
+        <div class="demo-float">7</div>
+        <div class="demo-float">8</div>
+        <div class="demo-float">9</div>
+    </div>
+</div>
+--
+1. 浮动元素前面定义的元素会把浮动元素挤到下面
+2. 先声明的浮动元素有优先靠近父元素左上角或者右上角位置的权利
+3. 如果有多个相同方向的浮动元素，浮动元素也会尽可能的靠近左上角或者右上角，直到父元素宽度没法放下这个元素的时候，这个元素才会被挤下去
+--
+### 清除浮动
+--
+```
+.demo-clear {
+    clear: left;  /* 清除左浮动 */
+    margin: 10px;
+    width: 100px;
+    height: 100px;
+    background: blue;
+}
+```
+--
+<div class="demo">
+    <div class="demo-box">
+        <div class="demo-float">1</div>
+        <div class="demo-float">2</div>
+        <div class="demo-float">3</div>
+        <div class="demo-clear">clear</div>
+        <div class="demo-float-r">4</div>
+        <div class="demo-float">5</div>
+        <div class="demo-float">6</div>
+        <div class="demo-float">7</div>
+        <div class="demo-float">8</div>
+        <div class="demo-float">9</div>
+    </div>
+</div>
+
+- clear 属性定义了元素的左侧或右侧或全部不允许出现浮动元素
+- clear 属性仅仅应用于块级元素
+--
+```
+<div class="demo-box demo-clearfix">
+    <div class="demo-float">1</div>
+    <div class="demo-float-r">2</div>
+
+    <!-- 清除浮动 -->
+    <div class="demo-clear"></div>
+</div>
+```
+--
+```
+/**
+ * http://nicolasgallagher.com/micro-clearfix-hack/
+ * For modern browsers
+ * 1. 处理 Opera 下 contenteditable 时候的bug
+ * 2. 使用 table 是为了触发 BFC，解决顶部元素的 margin 折叠问题
+ */
+.demo-clearfix:before,
+.demo-clearfix:after {
+    content: ' ';   /* 1 */
+    display: table; /* 2 */
+}
+.demo-clearfix:after {
+    clear: both;
+}
+
+/**
+ * IE 6/7 下触发 hasLayout 实现兼容
+ */
+.demo-clearfix {
+    *zoom: 1;
+}
+```
+--
+<div class="demo">
+    <div class="demo-box demo-clearfix">
+        <div class="demo-float">1</div>
+        <div class="demo-float">2</div>
+        <div class="demo-float">3</div>
+        <div class="demo-float-r">4</div>
+        <div class="demo-float-r">5</div>
+        <div class="demo-float-r">6</div>
+        <div class="demo-float">7</div>
+        <div class="demo-float">8</div>
+        <div class="demo-float">9</div>
+    </div>
+</div>
+
+
+---
+
+
+[学习CSS布局](http://zh.learnlayout.com/)
+
+
+---
+
+
+## CSS 兼容性 Hack
+--
+### IE 条件注释
+```
+<!--[if IE 6]>
+	这段文字只在IE6浏览器显示
+<![endif]-->
+```
+--
+### 属性前缀 Hack
+
+| Selector | IE6(s) | IE7(s) | IE8(s) | IE9(s) | IE10(s) |
+| -------- | ------ | ------ | ------ | ------ | ------- |
+| `color:red`     | Y | Y | Y | Y | Y |
+| `color:red\0`   | N | N | Y | Y | Y |
+| `color:red\9\0` | N | N | N | Y | Y |
+| `*color:red`    | Y | Y | N | N | N |
+| `_color:red`    | Y | N | N | N | N |
+--
+### [CSS Hack Table](http://swordair.com/tools/css-hack-table/)
+--
+CSS 会忽略不支持的属性或选择器
+<!-- http://stackoverflow.com/questions/13816764/invalid-css-selector-causes-rule-to-be-dropped-what-is-the-rationale -->
+<!-- http://stackoverflow.com/questions/5426261/border-radius-causing-naughty-errors-in-firebug-unknown-property-declaratio -->
+<!-- Fault tolerance: https://en.wikipedia.org/wiki/Fault_tolerance#Terminology -->
+--
+```
+.test1 {
+    background-color: #FFF;                    /* 不支持rgba */
+    background-color: rgba(255, 255, 255, .8); /* 支持rgba */
+}
+.test2 {
+    background-image: url(top.png);
+    /* IE9+ 不支持多背景 */
+    background-image: url(data:image/svg+xml;base64,....), none;
+}
+```
 
 
 ---
@@ -329,56 +528,19 @@ Javascript 用 ID 选择器，CSS 用 Class 选择器
 尽量做到“行为和样式分离”
 
 
-
 ---
 
 
-## 记录页面的 `A` 标签的点击事件
-```
-$('a').click(function () {
-    // 记录操作
-});
-```
-<!-- .element: class="fragment" data-fragment-index="1" -->
-```
-var links = document.getElementsByTagName('a');
-for (var i = 0, l = links.length; i < l; i++) {
-    links[i].onclick = (function (link) {
-        // 记录操作
-    })(links[i])
-}
-```
-<!-- .element: class="fragment" data-fragment-index="2" -->
-
-链接多了之后很慢！
-<!-- .element: class="fragment" data-fragment-index="3" -->
+## JAVASCRIPT 单线程
 --
-### 事件代理
---
-### 捕获与冒泡
-![](./demo/delegate.png)
+![](./demo/javascript-single.jpg)
 --
 ```
-document.body.addEventListener('click', function (e) {
-    e.preventDefault();
-    var target = e.target;
-    var isLink = target.nodeName === 'A';
-    if (isLink) {
-        // 记录操作
-    }
-}, false);
+setTimeout(function () {
+    console.log(1);
+}, 0);
+console.log(2);
 ```
-```
-$('body').on('click', 'a', function () {
-    // 记录操作
-});
-```
-<!-- .element: class="fragment" data-fragment-index="1" -->
---
-### 优势
-
-- 能处理动态更新的DOM元素
-- DOM元素很多时，有性能优势
 
 
 ---
@@ -457,19 +619,143 @@ var result = `<h1>${data.title}</h1>
 - [RegExp.prototype.exec()](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/RegExp/exec)
 
 
+
+---
+
+
+## [11年 Twitter 改版](http://ejohn.org/blog/learning-from-twitter/)
+--
+引入了无限滚动特性
+
+页面滚动时速度变的很慢！
+
+jQuery 1.4.2 升级到 1.4.4<!-- .element: class="fragment" data-fragment-index="1" -->
+--
+### 定位bug
+
+```
+$(window).bind('scroll', function () {
+    if (nearBottomOfPage()) {
+        // load more tweets ...
+    }
+});
+```
+
+```
+$details.find('.details-pane-outer');
+```
+<!-- .element: class="fragment" data-fragment-index="1" -->
+--
+jQuery 1.4.3开始选择器引擎 Sizzle 会优先使用 `querySelectorAll`
+--
+```
+// 1.4.2
+document.getElementsByClassName('details-pane-outer');
+// 1.4.4
+document.querySelectorAll('details-pane-outer');</code></pre>
+```
+--
+```
+var divs = document.getElementsByTagName("div");
+var i = 0;
+
+while(i < divs.length){
+    document.body.appendChild(document.createElement("div"));
+    i++;
+}
+```
+
+这是一个死循环！<!-- .element: class="fragment" data-fragment-index="1" -->
+--
+- Live NodeList 快
+- Static NodeList 慢
+--
+[为什么 `getElementsByTagName()` 比 `querySelectorAll()` 快？](https://www.nczonline.net/blog/2010/09/28/why-is-getelementsbytagname-faster-that-queryselectorall/)
+--
+- DOM 查询结果需要重用时一定要缓存
+- 绑定重复触发的事件时（例如window scroll 事件）一定要做 throttle 或 debounce
+
+
+---
+
+
+## throttle 和 debounce
+--
+- [debounce](http://underscorejs.org/#debounce) - 阻止事件触发直到N段时间后
+- [throttle](http://underscorejs.org/#throttle) - 限制事件触发频率
+--
+<a href='http://codepen.io/zmmbreeze/pen/GpyXxV/'>throttle 和 debounce 的区别</a>
+
+
+
+---
+
+
+## 记录页面的 `A` 标签的点击事件
+```
+$('a').click(function () {
+    // 记录操作
+});
+```
+<!-- .element: class="fragment" data-fragment-index="1" -->
+```
+var links = document.getElementsByTagName('a');
+for (var i = 0, l = links.length; i < l; i++) {
+    links[i].onclick = (function (link) {
+        // 记录操作
+    })(links[i])
+}
+```
+<!-- .element: class="fragment" data-fragment-index="2" -->
+
+链接多了之后很慢！
+<!-- .element: class="fragment" data-fragment-index="3" -->
+--
+### 事件代理
+--
+### 捕获与冒泡
+![](./demo/delegate.png)
+--
+```
+document.body.addEventListener('click', function (e) {
+    e.preventDefault();
+    var target = e.target;
+    var isLink = target.nodeName === 'A';
+    if (isLink) {
+        // 记录操作
+    }
+}, false);
+```
+```
+$('body').on('click', 'a', function () {
+    // 记录操作
+});
+```
+<!-- .element: class="fragment" data-fragment-index="1" -->
+--
+### 优势
+
+- 能处理动态更新的DOM元素
+- DOM元素很多时，有性能优势
+
+
 ---
 
 
 ## DOM 操作
 --
-- `relayout / reflow` - 重新计算节点的位置
-- `repaint` - 重新绘制节点到屏幕上
+- relayout / reflow - 重新计算节点的位置
+- repaint` - 重新绘制节点到屏幕上
+- composite - GPU 合成
 <!-- relayout 之后一定触发 repaint -->
 --
 ![](./demo/webkitflow.png)
 ![](./demo/geckoflow.jpg)
 <!-- http://www.phpied.com/rendering-repaint-reflowrelayout-restyle/ -->
 <!-- http://www.html5rocks.com/en/tutorials/internals/howbrowserswork/ -->
+--
+### 渲染流程
+![](./demo/repaintrelayout.jpg)
 --
 ### layout thrashing
 ![](./demo/layoutthrashing.png)
@@ -554,6 +840,11 @@ function call2() {
 <!-- http://wilsonpage.co.uk/preventing-layout-thrashing/ -->
 [Fast dom](https://github.com/wilsonpage/fastdom)
 --
+### Composite
+![](./demo/composite.png)
+--
+[css triggers](http://csstriggers.com/)
+--
 话说回来，一般调用没那么频繁。只是特殊情况下（动画）需要注意优化
 --
 ### No Rules! Just Tools!
@@ -561,127 +852,9 @@ function call2() {
 
 ---
 
-
-## CSS 兼容性 Hack
---
-### IE 条件注释
-```
-<!--[if IE 6]>
-	这段文字只在IE6浏览器显示
-<![endif]-->
-```
---
-### 属性前缀 Hack
-
-| Selector | IE6(s) | IE7(s) | IE8(s) | IE9(s) | IE10(s) |
-| -------- | ------ | ------ | ------ | ------ | ------- |
-| `color:red`     | Y | Y | Y | Y | Y |
-| `color:red\0`   | N | N | Y | Y | Y |
-| `color:red\9\0` | N | N | N | Y | Y |
-| `*color:red`    | Y | Y | N | N | N |
-| `_color:red`    | Y | N | N | N | N |
---
-### [CSS Hack Table](http://swordair.com/tools/css-hack-table/)
---
-CSS 会忽略不支持的属性或选择器
-<!-- http://stackoverflow.com/questions/13816764/invalid-css-selector-causes-rule-to-be-dropped-what-is-the-rationale -->
-<!-- http://stackoverflow.com/questions/5426261/border-radius-causing-naughty-errors-in-firebug-unknown-property-declaratio -->
-<!-- Fault tolerance: https://en.wikipedia.org/wiki/Fault_tolerance#Terminology -->
---
-```
-.test1 {
-    background-color: #FFF;                    /* 不支持rgba */
-    background-color: rgba(255, 255, 255, .8); /* 支持rgba */
-}
-.test2 {
-    background-image: url(top.png);
-    /* IE9+ 不支持多背景 */
-    background-image: url(data:image/svg+xml;base64,....), none;
-}
-```
+QA
 
 
----
-
-
-## 布局
---
-```
-.block {
-    /* 块级元素，新开始一行并且尽可能撑满容器 */
-    display: block;
-}
-.inline {
-    /* 行内元素，一行之内横向的排列，宽高不起作用 */
-    display: inline;
-    width: 1000px; /* 无效 */
-}
-.hide {
-    /* 隐藏元素，没有高宽 */
-    display: none;
-}
-.inline-block {
-    /* 行内元素，一行之内横向的排列，宽高起作用 */
-    display: inline-block;
-    height: 24px; /* 有效 */
-}
-```
---
-### 盒模型
-```
-.box {
-    margin: 10px;
-    padding: 10px;
-    width: 100px;
-    height: 100px;
-    border: 1px solid #CCC;
-}
-```
-
-[box-sizing](http://zh.learnlayout.com/box-sizing.html)
-<!-- .element: class="fragment" data-fragment-index="1" -->
---
-![](./demo/catboxmodel.jpg)
-<!-- 盒模型就像集装箱里面的盒子一样，盒子间的距离是 margin，盒子外壳的厚度是
-border，盒子内的货物的高宽是 width 与 height，货物与盒子的间距是 padding -->
---
-![](./demo/boxmodel.png)
-
-仅仅是普通文档流，一般是从左至右、从上到下
-<!-- .element: class="fragment" data-fragment-index="1" -->
-
-
----
-
-
-## 浮动元素
---
-1. 浮动元素脱离文档流。对于它的父元素来说，浮动元素是不存在的（父元素不会自适应以包裹浮动元素，所以需要清除浮动）
-2. 一个浮动元素的位置会尽可能的靠近他父元素的左上角或者右上角
-3. 浮动元素前面定义的元素会把浮动元素挤到下面
-4. 先声明的浮动元素有优先靠近父元素左上角或者右上角（规则2）位置的权利
-5. 规则2的拓展，如果有多个相同方向的浮动元素，浮动元素也会尽可能的靠近左上角或者右上角，直到父元素宽度没法放下这个元素的时候，这个元素才会被挤下去
-6. 行内元素添加浮动属性会变成块级元素
-7. 浮动元素不会跑出父元素的边界
---
-### 清除浮动
-
-
----
-
-
-[学习CSS布局](http://zh.learnlayout.com/)
-
-
----
-
-
-
----
-
-
-[](http://csstriggers.com/)
-![](./demo/repaintrelayout.jpg)
 
 
 
