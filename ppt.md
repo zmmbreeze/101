@@ -745,7 +745,7 @@ $('body').on('click', 'a', function () {
 ## DOM 操作
 --
 - relayout / reflow - 重新计算节点的位置
-- repaint` - 重新绘制节点到屏幕上
+- repaint - 重新绘制节点到屏幕上
 - composite - GPU 合成
 <!-- relayout 之后一定触发 repaint -->
 --
