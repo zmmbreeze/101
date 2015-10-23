@@ -638,7 +638,7 @@ CSS 会忽略不支持的属性或选择器
 }
 ```
 
-`[box-sizing](http://zh.learnlayout.com/box-sizing.html)`
+[box-sizing](http://zh.learnlayout.com/box-sizing.html)
 <!-- .element: class="fragment" data-fragment-index="1" -->
 --
 ![](./demo/catboxmodel.jpg)
