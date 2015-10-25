@@ -21,6 +21,14 @@
         <link rel="stylesheet" href="lib/css/zenburn.css">
 
         <style>
+        .reveal h1,
+        .reveal h2,
+        .reveal h3,
+        .reveal h4,
+        .reveal h5,
+        .reveal h6 {
+            text-transform: capitalize;
+        }
         .reveal strong {
             font-size: 1.5em;
         }
@@ -29,6 +37,9 @@
         }
         .reveal section img {
             background-color: #FFF;
+        }
+        .reveal blockquote {
+            text-align: left;
         }
         .reveal .demo {
             position: relative;
@@ -115,16 +126,15 @@
             *zoom: 1;
         }
 
-.article h1 {
-    font-size: 32px;
-}
-.article img {
-    float: left;
-}
-.article p {
-    overflow: hidden;
-}
-
+        .article h1 {
+            font-size: 32px;
+        }
+        .article img {
+            float: left;
+        }
+        .article p {
+            overflow: hidden;
+        }
         </style>
 
         <!-- Printing and PDF exports -->
@@ -175,7 +185,16 @@
                     { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
                     { src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
                     { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
-                    { src: 'plugin/highlight/highlight.js', async: true, condition: function() { return !!document.querySelector( 'pre code' ); }, callback: function() { hljs.initHighlightingOnLoad(); } },
+                    {
+                        src: 'plugin/highlight/highlight.js',
+                        async: true,
+                        condition: function() {
+                            return true;
+                        },
+                        callback: function() {
+                            hljs.initHighlightingOnLoad();
+                        }
+                    },
                     { src: 'plugin/zoom-js/zoom.js', async: true },
                     { src: 'plugin/notes/notes.js', async: true }
                 ]

@@ -4,19 +4,18 @@
 
 ---
 
-
-```
-<!DOCTYPE html> <!-- HTML5 -->
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>标题</title>
-</head>
-<body>
-    内容
-</body>
-</html>
-```
+## HTML
+--
+<pre><code data-trim>
+&lt;!DOCTYPE html&gt; &lt;!-- HTML5 --&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;title&gt;标题&lt;/title&gt;
+&lt;/head&gt;
+    &lt;body&gt;内容&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
 
 
 ---
@@ -75,14 +74,14 @@
 
 ![](./demo/timing.png)
 --
-- Stalled / Blocking - 请求发起之前等待的时间总和。包含了用于处理代理的时间。另外，如果有已经建立好的连接，那么这个时间还包括等待已建立连接被复用的时间，这个遵循 Chrome 对同一源最大6个TCP连接的规则。<a href="http://fex.baidu.com/blog/2015/01/chrome-stalled-problem-resolving-process/" target="_blank">Chrome的bug导致stalled了21秒</a>
-- Proxy Negotiation - 处理代理的时间
-- DNS Lookup - 查找DNS的时间。页面上每个新的域都需要一次完整的寻路来完成DNS查找
-- Initial Connection / Connecting - 建立链接的时间，包括TCP三次握手及重试握手，还有处理SSL
-- SSL - 处理 SSL 握手
-- Request Sent / Sending - 请求发送的时间
-- Waiting (<abbr title="Time To First Byte">TTFB</abbr>) - Time To First Byte，等待首个字节返回的时间
-- Content Download / Downloading - 全部内容下载完成的时间
+- Stalled / Blocking - <small>请求发起之前等待的时间总和。包含了用于处理代理的时间。另外，如果有已经建立好的连接，那么这个时间还包括等待已建立连接被复用的时间，这个遵循 Chrome 对同一源最大6个TCP连接的规则。<a href="http://fex.baidu.com/blog/2015/01/chrome-stalled-problem-resolving-process/" target="_blank">Chrome的bug导致stalled了21秒</a></small>
+- Proxy Negotiation - <small>处理代理的时间</small>
+- DNS Lookup - <small>查找DNS的时间，页面上每个新的域都需要一次完整的寻路来完成DNS查找</small>
+- Initial Connection / Connecting - <small>建立链接的时间，包括TCP三次握手及重试握手，还有处理SSL</small>
+- SSL - <small>处理 SSL 握手</small>
+- Request Sent / Sending - <small>请求发送的时间</small>
+- Waiting (<abbr title="Time To First Byte">TTFB</abbr>) - <small>Time To First Byte，等待首个字节返回的时间</small>
+- Content Download / Downloading - <small>全部内容下载完成的时间</small>
 --
 ### [Performance API](http://javascript.ruanyifeng.com/bom/performance.html)
 --
@@ -107,15 +106,15 @@
 <pre><code>&lt;link href="http://example.com/test.css?rtt=2" rel="stylesheet"&gt;
 &lt;!-- body 内容 --&gt;
 &lt;script&gt;
-var script = document.createElement('script');
-script.src = "http://example.com/test.js?rtt=1&a";
-document.getElementsByTagName('head')[0].appendChild(script);
+    var script = document.createElement('script');
+    script.src = "http://example.com/test.js?rtt=1&a";
+    document.getElementsByTagName('head')[0].appendChild(script);
 &lt;/script&gt;
 
 &lt;script&gt;
-var script = document.createElement('script');
-script.src = "http://example.com/test.js?rtt=1&b";
-document.getElementsByTagName('head')[0].appendChild(script);
+    var script = document.createElement('script');
+    script.src = "http://example.com/test.js?rtt=1&b";
+    document.getElementsByTagName('head')[0].appendChild(script);
 &lt;/script&gt;</code></pre>
 --
 [![](./demo/script-1.jpeg)](http://output.jsbin.com/qefefiyi/9/quiet)
@@ -189,12 +188,8 @@ border，盒子内的货物的高宽是 width 与 height，货物与盒子的间
 --
 ```
 <div class="demo">
-    <p>
-        Lorem Ipsum is simply <span>这是一个行内块级元素 display: inline;</span> Lorem.
-    </p>
-    <p>
-        Lorem Ipsum is simply <span>这是一个行内块级元素 display: inline;</span> Lorem.
-    </p>
+    <p>Lorem Ipsum is simply <span>这是一个行内块级元素 display: inline;</span> Lorem.</p>
+    <p>Lorem Ipsum is simply <span>这是一个行内块级元素 display: inline;</span> Lorem.</p>
 </div>
 ```
 --
@@ -419,20 +414,25 @@ CSS 会忽略不支持的属性或选择器
     /* ... */
 }
 ```
+--
 > CSS selector matching is now reasonably fast for the absolute majority of common selectors that used to be slow at the time of the profiler implementation. This time is also included into the Timeline "Recalculate Style" event.
+>
 > As such, I believe the CSS selector profiler is not as useful as it [might have been] used to and can safely be dropped. This will also reduce the fraction of developers trying to micro-optimize already fast selectors.
-
-Chrome 的 CSS 选择器匹配性能已经足够快了，Chrome 30中[移除了自己的 CSS selector性能分析器](https://code.google.com/p/chromium/issues/detail?id=265486)
-```
-[Github 遇到的 CSS 性能挑战](https://speakerdeck.com/jonrohan/githubs-css-performance)
+--
+- Chrome 的 CSS 选择器匹配性能已经足够快了，Chrome 30中[移除了自己的 CSS selector性能分析器](https://code.google.com/p/chromium/issues/detail?id=265486)
+- [Github 遇到的 CSS 性能挑战](https://speakerdeck.com/jonrohan/githubs-css-performance)
 --
 ### 避免冲突
 ```
 /* index_header.css */
-.header .current { background: #FEFEFE; }
+.header .current {
+    background: #FEFEFE;
+}
 
 /* index_list.css */
-.current  { background: blue; }
+.current {
+    background: blue;
+}
 ```
 --
 ### [OOCSS](http://oocss.org/) / [SMACSS](https://smacss.com/) / [BEM](https://en.bem.info/)
@@ -445,12 +445,10 @@ Chrome 的 CSS 选择器匹配性能已经足够快了，Chrome 30中[移除了�
 .menu {
     display: block;
 }
-
 /* Element */
 .menu__item {
     float: left;
 }
-
 /* Modifier */
 .menu__item_current {
     background-color: #EFEFEF;
@@ -475,9 +473,17 @@ Chrome 的 CSS 选择器匹配性能已经足够快了，Chrome 30中[移除了�
 ### [CSS Modules](http://glenmaddern.com/articles/css-modules)
 ```
 /* components/submit-button.css */
-.common { /* font-sizes, padding, border-radius */ }
-.normal { composes: common; /* blue color, light blue background */ }
-.error { composes: common; /* red color, light red background */ }
+.common {
+    /* font-sizes, padding, border-radius */
+}
+.normal {
+    composes: common;
+    /* blue color, light blue background */
+}
+.error {
+    composes: common;
+    /* red color, light red background */
+}
 ```
 ```
 .components_submit_button__common__abc5436 { /* font-sizes, padding, border-radius */ }
@@ -551,7 +557,7 @@ console.log(2);
 ```
 var result = ''
     + '<h1>' + title + '</h1>'
-    + '<p>' + content + '</p>';</code></pre>
+    + '<p>' + content + '</p>';
 ```
 
 ```
@@ -652,7 +658,7 @@ jQuery 1.4.3开始选择器引擎 Sizzle 会优先使用 `querySelectorAll`
 // 1.4.2
 document.getElementsByClassName('details-pane-outer');
 // 1.4.4
-document.querySelectorAll('details-pane-outer');</code></pre>
+document.querySelectorAll('details-pane-outer');
 ```
 --
 ```
@@ -691,10 +697,11 @@ while(i < divs.length){
 ---
 
 
-## 记录页面的 `A` 标签的点击事件
+## 记录页面的 A 标签的点击事件
+--
 ```
-$('a').click(function () {
-    // 记录操作
+$('a').click(function (e) {
+    dosomething();
 });
 ```
 <!-- .element: class="fragment" data-fragment-index="1" -->
@@ -702,8 +709,8 @@ $('a').click(function () {
 var links = document.getElementsByTagName('a');
 for (var i = 0, l = links.length; i < l; i++) {
     links[i].onclick = (function (link) {
-        // 记录操作
-    })(links[i])
+        dosomething();
+    })(links[i]);
 }
 ```
 <!-- .element: class="fragment" data-fragment-index="2" -->
@@ -840,8 +847,8 @@ function call2() {
 <!-- http://wilsonpage.co.uk/preventing-layout-thrashing/ -->
 [Fast dom](https://github.com/wilsonpage/fastdom)
 --
-### Composite
-![](./demo/composite.png)
+### 合成线程
+<img height="500" src="./demo/composite.png" alt="">
 --
 [css triggers](http://csstriggers.com/)
 --
@@ -852,7 +859,7 @@ function call2() {
 
 ---
 
-QA
+## Q & A
 
 
 
