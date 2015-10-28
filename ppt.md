@@ -389,7 +389,7 @@ CSS 会忽略不支持的属性或选择器
 }
 .test2 {
     background-image: url(top.png);
-    /* IE9+ 不支持多背景 */
+    /* IE9+ 支持多背景 */
     background-image: url(data:image/svg+xml;base64,....), none;
 }
 ```
